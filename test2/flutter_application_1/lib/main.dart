@@ -49,6 +49,25 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Route"),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Go back!'),
+        ),
+      ),
+    );
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
@@ -60,6 +79,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SecondRoute()));
     });
   }
 
@@ -97,12 +118,24 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Container(
+              padding: EdgeInsets.all(30.0),
+              child: Column(children: <Widget>[
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Enter your username'),
+                  onChanged: (text) {
+                    print("First text field: $text");
+                  },
+                ),
+                TextFormField(
+                  obscureText: true,
+                  decoration: InputDecoration(labelText: 'Enter password'),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Log in'),
+                ),
+              ]),
             ),
           ],
         ),
