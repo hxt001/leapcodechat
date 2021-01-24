@@ -71,6 +71,9 @@ class SecondRoute extends StatelessWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  var username = TextEditingController();
+  var pwd = TextEditingController();
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -122,17 +125,18 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.all(30.0),
               child: Column(children: <Widget>[
                 TextFormField(
+                  controller: username,
                   decoration: InputDecoration(labelText: 'Enter your username'),
-                  onChanged: (text) {
-                    print("First text field: $text");
-                  },
                 ),
                 TextFormField(
+                  controller: pwd,
                   obscureText: true,
                   decoration: InputDecoration(labelText: 'Enter password'),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print(pwd.text);
+                  },
                   child: Text('Log in'),
                 ),
               ]),
