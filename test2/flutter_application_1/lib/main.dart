@@ -50,9 +50,6 @@ class SecondRoute extends StatelessWidget {
 class _MyHomePageState extends State<MyHomePage> {
   //int _counter = 0;
 
-  var username = TextEditingController();
-  var pwd = TextEditingController();
-
   void _incrementCounter() {
     setState(() {
       Navigator.push(
