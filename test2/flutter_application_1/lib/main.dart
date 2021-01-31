@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(MyApp());
@@ -68,9 +71,29 @@ class SecondRoute extends StatelessWidget {
   }
 }
 
+Future<String> getData() async {
+  final response = await http.get("http://10.0.2.2:5678/test2");
+  Map userMap = jsonDecode(response.body);
+  var stu = Student.fromJson(userMap);
+  print(stu.name);
+  print(stu.age);
+  print(stu.address);
+  return stu.address;
+}
+
+class Student {
+  String name;
+  int age;
+  String address;
+  Student.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        age = json['age'],
+        address = json['address'];
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  String _mytext = 'default';
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -79,8 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SecondRoute()));
+      print("line88");
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => SecondRoute()));
     });
   }
 
@@ -121,6 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               padding: EdgeInsets.all(30.0),
               child: Column(children: <Widget>[
+                Text("haha $_mytext"),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Enter your username'),
                   onChanged: (text) {
@@ -132,7 +157,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: InputDecoration(labelText: 'Enter password'),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    print("line 144");
+                    var value = await getData();
+                    setState(() {
+                      print("line 147");
+                      _mytext = value;
+                    });
+                    print("line 150");
+                  },
                   child: Text('Log in'),
                 ),
               ]),
